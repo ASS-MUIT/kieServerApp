@@ -49,12 +49,18 @@ public class DefaultWebSecurityConfig {
 		 * org.springframework.security.config.annotation.web.builders.HttpSecurity
 		 * https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/config/annotation/web/builders/HttpSecurity.html#authorizeHttpRequests(org.springframework.security.config.Customizer)
 		 */
+		/**
+		 * TODO
+		 * https://stackoverflow.com/questions/53395200/h2-console-is-not-showing-in-browser
+		 * Tengo que añadir esta configuración, la última línea del http, para que la consola h2 se vea
+		 */
 		http.authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
 				.antMatchers("/**").authenticated().antMatchers("/*", "/img/*","/js/**", "/css/**")
 				.permitAll())
 				.exceptionHandling((exceptionHandling) -> exceptionHandling.accessDeniedPage("/access-denied.html"))
 				.csrf((csrf) -> csrf.disable()).httpBasic(withDefaults()).cors(withDefaults())
-				.formLogin(withDefaults());
+				.formLogin(withDefaults())
+				.headers().frameOptions().disable();
 		return http.build();
 	}
 
