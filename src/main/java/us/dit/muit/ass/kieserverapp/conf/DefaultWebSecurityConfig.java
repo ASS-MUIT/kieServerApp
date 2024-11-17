@@ -73,10 +73,7 @@ public class DefaultWebSecurityConfig {
 		//Este usuario se va a utilizar para el acceso al servidor
 		UserDetails consentimientos = User.withUsername("consentimientos").password(encoder.encode("consentimientos")).roles("kie-server").build();
 	
-        UserDetails practitioner = User.withUsername("practitioner").password(encoder.encode("practitioner")).roles("practitioner").build();
-        
-        
-        UserDetails kieserver = User.withUsername("kieserver").password(encoder.encode("kieserver1!")).roles("kie-server").roles("rest-all").build();
+        UserDetails practitioner = User.withUsername("practitioner").password(encoder.encode("practitioner")).roles("practitioner").build();		
 
         UserDetails wbadmin = User.withUsername("wbadmin").password(encoder.encode("wbadmin")).roles("kie-server").roles("practitioner").roles("rest-all").build();
 
@@ -85,10 +82,14 @@ public class DefaultWebSecurityConfig {
         UserDetails admin = User.withUsername("admin").password(encoder.encode("admin")).roles("kie-server").build();
 
         UserDetails medico = User.withUsername("medico").password(encoder.encode("medico")).roles("practitioner").build();
-        
-        
+        /**
+		 * El usuario controlador (kieserver y controller) permite la conexión en modo development, para que el kie server sea controlado por BC, tiene que tener el rol kie-server
+		 * este usuario tiene que estar configurado en el BC
+		 */
+        UserDetails controller = User.withUsername("controllerUser").password(encoder.encode("controllerUser")).roles("kie-server").build();
+		UserDetails kieserver = User.withUsername("kieserver").password(encoder.encode("kieserver1!")).roles("kie-server").build();
 
-		return new InMemoryUserDetailsManager(admin,wbadmin, user, kieserver, consentimientos, practitioner, medico);
+		return new InMemoryUserDetailsManager(admin,wbadmin, user, kieserver, consentimientos, practitioner, medico, controller);
 	}
 
 	@Bean
