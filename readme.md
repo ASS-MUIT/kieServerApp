@@ -1,5 +1,4 @@
 # Servidor Kie básico
-=============================
 ## Capacidades
 Aplicación spring boot que simplemente arranca un servidor kie.
 No carga ningún contenedor en el arranque, tendrá que hacerse a posteriori.
@@ -8,6 +7,8 @@ Estos elementos deberán integrarse desde repositorios maven.
 
 
 ## Modo desarrollo
+El fichero application-dev.properties es el que está correctamente configurado para que el servidor se gestione desde business central. De modo que para que el servidor trabaje en modo gestionado por el controlador deberá ejecutarse en modo dev como
+ .\launch-dev.bat clean install
 ### Configuración de Business Central
 standalone.xml: añadir las propiedades org.kie.server.user y org.kie.server.pwd con los datos de un usuario del servidor kie que tenga el rol kie-server, que concede credenciales para acceder a la API del servidor REST
 GUI: añadir un usuario que tenga el rol rest-all, que concede credenciales para acceder a la API de BC
