@@ -67,6 +67,8 @@ public class DefaultWebSecurityConfig {
 	/**
 	 * Configuración de la autenticación con autenticación en memoria y encriptada
 	 * Muy débil no sirve para producción
+	 * aspectos de gestión de tareas humanas
+	 * https://github.com/dmarrazzo/rh-bpm-notes/blob/master/human_tasks.md
 	 **/
 
 	@Bean
@@ -81,21 +83,22 @@ public class DefaultWebSecurityConfig {
 	
         UserDetails practitioner = User.withUsername("practitioner").password(encoder.encode("practitioner")).roles("practitioner").build();		
 
-        UserDetails wbadmin = User.withUsername("wbadmin").password(encoder.encode("wbadmin")).roles("kie-server").roles("practitioner").roles("rest-all").build();
+        UserDetails wbadmin = User.withUsername("wbadmin").password(encoder.encode("wbadmin")).roles("kie-server").roles("practitioner").roles("rest-all").roles("user").roles("admin").build();
 
         UserDetails user = User.withUsername("user").password(encoder.encode("user")).roles("HR").build();
 
         UserDetails admin = User.withUsername("admin").password(encoder.encode("admin")).roles("kie-server").build();
 
-        UserDetails medico = User.withUsername("medico").password(encoder.encode("medico")).roles("practitioner").build();
+        UserDetails medico = User.withUsername("medico").password(encoder.encode("medico")).roles("practitioner").roles("user").roles("admin").build();
+        UserDetails katy = User.withUsername("katy").password(encoder.encode("katy")).roles("practitioner").roles("user").roles("admin").build();
         /**
 		 * El usuario controlador (kieserver y controller) permite la conexión en modo development, para que el kie server sea controlado por BC, tiene que tener el rol kie-server
 		 * este usuario tiene que estar configurado en el BC
 		 */
-        UserDetails controller = User.withUsername("controllerUser").password(encoder.encode("controllerUser")).roles("kie-server").build();
-		UserDetails kieserver = User.withUsername("kieserver").password(encoder.encode("kieserver1!")).roles("kie-server").build();
+        UserDetails controller = User.withUsername("controllerUser").password(encoder.encode("controllerUser")).roles("kie-server").roles("user").build();
+		UserDetails kieserver = User.withUsername("kieserver").password(encoder.encode("kieserver1!")).roles("kie-server").roles("user").build();
 
-		return new InMemoryUserDetailsManager(admin,wbadmin, user, kieserver, consentimientos, practitioner, medico, controller);
+		return new InMemoryUserDetailsManager(katy, admin,wbadmin, user, kieserver, consentimientos, practitioner, medico, controller);
 	}
 
 	@Bean
