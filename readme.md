@@ -22,3 +22,7 @@ Podrá verse el servidor en la vista de servidores de ejecución con el nombre k
 A partir de ese momento se pueden desplegar en este servidor contenedores definidos en business central
 Posteriormente se pueden ejecutar los procesos desplegados en el contenedor desde business central.
 Para ello recordar seleccionar el servidor en la vista de procesos, en la esquina superior derecha (por defecto se usa sampleServer)
+
+## Otros aspectos de interés
+Las pruebas están realizadas usando jdk-11.0.4
+´´$env:JAVA_HOME='C:\Program Files\Java\jdk-11.0.4'´´
