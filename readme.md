@@ -24,5 +24,5 @@ Posteriormente se pueden ejecutar los procesos desplegados en el contenedor desd
 Para ello recordar seleccionar el servidor en la vista de procesos, en la esquina superior derecha (por defecto se usa sampleServer)
 
 ## Otros aspectos de interés
-Las pruebas están realizadas usando jdk-11.0.4
+Las pruebas están realizadas usando jdk-11.0.4 y jdk-11.0.8 ambos van bien
 ´´$env:JAVA_HOME='C:\Program Files\Java\jdk-11.0.4'´´
