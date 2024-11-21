@@ -21,6 +21,6 @@ public class RegisterWIH {
      */
     @Bean(name = "AppointmentDAODefinitions")
     WorkItemHandler appointmentDAOWorkItemHandler() {
-        return new AppointmentDAOWorkItemHandler(null, null);
+        return new AppointmentDAOWorkItemHandler();
     }
 }
