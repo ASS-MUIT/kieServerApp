@@ -40,3 +40,9 @@ Para poder gestionar las tareas humanas desde BC en el fichero de configuración
 En este [repositorio de github](https://github.com/dmarrazzo/rh-bpm-notes/blob/master/human_tasks.md) puede encontrar información interesante para la gestión de las tareas humanas
 
 También se ha configurado para que la consola h2 esté disponible en ``/h2-console``, para así facilitar la depuración.
+
+### Consideraciones adicionales
+Las pruebas están realizadas usando jdk-11.0.4 y jdk-11.0.8 ambos van bien. De modo que la variable de entorno JAVA_HOME debería guardar la ruta de acceso al jdk adecuado. P.e.
+`` $env:JAVA_HOME='C:\Program Files\Java\jdk-11.0.4' ``
+
+Si se usan artefactos de work item handlers hay que tener precaución de que estén compilados con versión compatible del jdk
