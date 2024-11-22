@@ -11,6 +11,15 @@ import us.dit.muit.ass.wih.AppointmentDAOWorkItemHandler;
 
 /**
  * Registro el WIH con el nombre AppointmentDAODefinitions
+ * El nombre (campo name) con el que se registra el componente debe coincidir con el que se haya puesto en el wid del kjar. Los wid están en la carpeta global de la base de conocimiento (kjar)
+ *[
+ *       [
+ *           "name" : "AppointmentDAODefinitions",
+ *           "displayName" : "AppointmentDAODefinitions",
+ *           "category" : "wih",
+ *   ...      
+ *     ]
+ *]
  */
 
 @Configuration
