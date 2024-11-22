@@ -18,7 +18,7 @@ Para arrancar la aplicación de manera que el servidor trabaje en modo gestionad
 `` .\launch-dev.bat clean install ``
 
 ### Configuración de Business Central
-Fichero ``standalone.xml``: añadir las propiedades org.kie.server.user y org.kie.server.pwd con los datos de un usuario del servidor kie que tenga el rol kie-server, que concede credenciales para acceder a la API del servidor REST
+Fichero ``standalone.xml``: añadir las propiedades ``org.kie.server.user`` y ``org.kie.server.pwd`` con los datos de un usuario del servidor kie que tenga el rol kie-server, que concede credenciales para acceder a la API del servidor REST
 
 GUI: añadir un usuario que tenga el rol ``rest-all``, que concede credenciales para acceder a la API de BC. Este usuario tiene que estar configurado también en el servidor kie.
 ### Configuración del servidor
