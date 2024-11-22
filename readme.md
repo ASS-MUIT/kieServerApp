@@ -18,7 +18,7 @@ Para arrancar la aplicación de manera que el servidor trabaje en modo gestionad
 `` .\launch-dev.bat clean install ``
 
 ### Configuración de Business Central
-Fichero ``standalone.xml``: añadir las propiedades org.kie.server.user y org.kie.server.pwd con los datos de un usuario del servidor kie que tenga el rol kie-server, que concede credenciales para acceder a la API del servidor REST
+Fichero ``standalone.xml``: añadir las propiedades ``org.kie.server.user`` y ``org.kie.server.pwd`` con los datos de un usuario del servidor kie que tenga el rol kie-server, que concede credenciales para acceder a la API del servidor REST
 
 GUI: añadir un usuario que tenga el rol ``rest-all``, que concede credenciales para acceder a la API de BC. Este usuario tiene que estar configurado también en el servidor kie.
 ### Configuración del servidor
@@ -42,7 +42,7 @@ En este [repositorio de github](https://github.com/dmarrazzo/rh-bpm-notes/blob/m
 También se ha configurado para que la consola h2 esté disponible en ``/h2-console``, para así facilitar la depuración.
 
 ### Consideraciones adicionales
-Las pruebas están realizadas usando jdk-11.0.4 y jdk-11.0.8 ambos van bien. De modo que la variable de entorno JAVA_HOME debería guardar la ruta de acceso al jdk adecuado. P.e.
+Las pruebas están realizadas usando ``jdk-11.0.4`` y ``jdk-11.0.8`` ambos van bien. De modo que la variable de entorno ``JAVA_HOME`` debería guardar la ruta de acceso al jdk adecuado. P.e.
 `` $env:JAVA_HOME='C:\Program Files\Java\jdk-11.0.4' ``
 
 Si se usan artefactos de work item handlers hay que tener precaución de que estén compilados con versión compatible del jdk
