@@ -12,11 +12,19 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 /**
- * Permite configurar las variables de entorno de la máquina virtual java con
+ * ES: Permite configurar las variables de entorno de la máquina virtual java
+ * con
  * valores que se establezcan en el fichero de configuración de la aplicación.
  * Se configurarán las variables del espacio de nombres system Es decir, si en
  * el fichero application.properties aparece una variable system.aaa.bbb se
  * configurará al arrancar la aplicación
+ * 
+ * EN: Allows configuring Java virtual machine environment variables with
+ * values that are set in the application configuration file.
+ * Variables from the system namespace will be configured. That is, if a
+ * system.aaa.bbb variable appears in the application.properties file, it will
+ * be
+ * configured when starting the application
  */
 @Component
 @ConfigurationProperties(prefix = "system")
@@ -32,6 +40,8 @@ public class SystemPropertiesInjector {
 		if (properties != null) {
 
 			for (Entry<String, String> property : properties.entrySet()) {
+				// ES: Inyectando propiedad en las propiedades del sistema
+				// EN: Injecting property into system properties
 				logger.info("Injecting Property with Name: {} and Value: {} into System Properties", property.getKey(),
 						property.getValue());
 				System.setProperty(property.getKey(), property.getValue());
