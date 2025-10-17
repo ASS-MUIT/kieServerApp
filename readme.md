@@ -1,48 +1,55 @@
-# Servidor Kie básico
-## Capacidades
-Aplicación spring boot que simplemente arranca un servidor kie.
-No carga ningún contenedor en el arranque, tendrá que hacerse a posteriori.
+# 🚀 Basic Kie Server
+## ⚡ Capabilities
+Spring Boot application that simply starts a Kie server.
+It doesn't load any knowledge base (containers) at startup; this will need to be done later.
 
-Su misión será integrar elementos transversales, que sean comunes a muchos procesos.
-Estos elementos deberán integrarse desde repositorios maven.
+Its mission will be to integrate cross-cutting elements that are common to many processes.
+These elements should be integrated from **Maven** repositories.
 
+## 🛠️ Development Mode
+In managed mode, a Kie server uses the **"controller" REST API** from BC to register itself with the controller.
+In turn, the controller (BC) uses the **Kie server's REST API** to manage it (load containers and manage processes, cases, tasks, etc...). Therefore, it's necessary to configure users with permissions for both interfaces; these will be the REST API clients.
 
-## Modo desarrollo
-En el modo gestionado un servidor kie utiliza la API REST "controller" de BC para registrarse en el controlador.
-A su vez, el controlador (BC) utiliza la API REST del servidor kie para gestionarlo (cargar contenedores y gestionar procesos, casos, tareas, etc...). Por ello es necesario configurar usuarios con permisos para ambas interfaces, estos serán los clientes de las APIs REST.
+This application is configured so that if it is started in development mode the Kie server will be configured in managed mode. Thus, the `application-dev.properties` file is configured so that the server is managed from Business Central (BC).
+In the product documentation [Red Hat Process Automation Manager](https://docs.redhat.com/en/documentation/red_hat_process_automation_manager/7.13/html/managing_red_hat_process_automation_manager_and_kie_server_settings/kie-server-configure-central-proc_execution-server#kie-server-configure-central-proc_execution-server) you can find detailed information on how to configure a Kie server and BC in managed mode.
 
-Esta aplicación está configurada para que en modo desarrollo el servidor kie se configure en modo gestionado. De manera que el fichero ``application-dev.properties`` está configurado para que el servidor se gestione desde business central (BC). 
-En la documentación del producto [Process Automation Manager de RedHat](https://docs.redhat.com/en/documentation/red_hat_process_automation_manager/7.13/html/managing_red_hat_process_automation_manager_and_kie_server_settings/kie-server-configure-central-proc_execution-server#kie-server-configure-central-proc_execution-server) puede encontrar información detallada de cómo configurar un servidor kie y BC en modo gestionado.
+To start the application so that the server works in managed mode by the controller, you should execute:
+```bash
+.\launch-dev.bat clean install
+```
 
-Para arrancar la aplicación de manera que el servidor trabaje en modo gestionado por el controlador deberá ejecutar:
-`` .\launch-dev.bat clean install ``
+### 🏢 Business Central Configuration
+📄 `standalone.xml` file: add the properties `org.kie.server.user` and `org.kie.server.pwd` with the data of a Kie server user that has the kie-server role, which grants credentials to access the server's REST API.
 
-### Configuración de Business Central
-Fichero ``standalone.xml``: añadir las propiedades ``org.kie.server.user`` y ``org.kie.server.pwd`` con los datos de un usuario del servidor kie que tenga el rol kie-server, que concede credenciales para acceder a la API del servidor REST
+🖥️ GUI: add a user that has the `rest-all` role, which grants credentials to access BC's API. This user must also be configured on the Kie server.
 
-GUI: añadir un usuario que tenga el rol ``rest-all``, que concede credenciales para acceder a la API de BC. Este usuario tiene que estar configurado también en el servidor kie.
-### Configuración del servidor
-Fichero ``application-dev.properties``: añadir las propiedades ``org.kie.server.controller.pwd/user`` con el usuario de BC con credenciales ``rest-all`` y ``kieserver.controllers`` con la url de la api rest de BC ``http://localhost:8080/business-central/rest/controller``
+### ⚙️ Kie Server Configuration
+📄 `application-dev.properties` file: add the properties `org.kie.server.controller.pwd/user` with the BC user with `rest-all` credentials and `kieserver.controllers` with the BC REST API URL `http://localhost:8080/business-central/rest/controller`
 
-Fichero ``DefaultWebSecurityConfig``: en modo desarrollo, cuando no se utiliza ningún proveedor de identidad, este es el fichero en el que se configuran los usuarios del servidor. Por ello aquí será necesario añadir un usuario que tenga el rol ``kie-server``, que concederá credenciales para acceder a la API del servidor, este usuario tiene que estar también configurado en BC.
-### Ejecución
-Arrancar Business Central
+📄 `DefaultWebSecurityConfig` file: in development mode, when no identity provider is used, this is the file where server users are configured. Therefore, here it will be necessary to add a user that has the `kie-server` role, which will grant credentials to access the server API; this user must also be configured in BC.
 
-Al ejecutar `` .\launch-dev.bat clean install `` se arrancará un servidor kie conectado business central.
-Podrá verse el servidor en la vista de servidores de ejecución con el nombre kieserverapp-dev@localhost:8090
+### ▶️ Execution
+1. 🚀 Start Business Central
 
-A partir de ese momento se pueden desplegar en este servidor contenedores definidos en business central
-Posteriormente se pueden ejecutar los procesos desplegados en el contenedor desde business central.
-Para ello recordar seleccionar el servidor en la vista de procesos, en la esquina superior derecha (por defecto se usa sampleServer)
-### Configuraciones adicionales del servidor en modo desarrollo
-Para poder gestionar las tareas humanas desde BC en el fichero de configuración se añade `` system.properties.org.jbpm.ht.admin.group=admin ``
+2. 🔧 When executing `.\launch-dev.bat clean install`, a Kie server connected to Business Central will start.
+   You can see the server in the execution servers view with the name **kieserverapp-dev@localhost:8090**
 
-En este [repositorio de github](https://github.com/dmarrazzo/rh-bpm-notes/blob/master/human_tasks.md) puede encontrar información interesante para la gestión de las tareas humanas
+3. 📦 From that moment, containers defined in Business Central can be deployed on this server.
 
-También se ha configurado para que la consola h2 esté disponible en ``/h2-console``, para así facilitar la depuración.
+4. 🔄 Subsequently, the processes deployed in the container can be executed from Business Central.
+   Remember to select the server in the process view, in the upper right corner (by default sampleServer is used).
 
-### Consideraciones adicionales
-Las pruebas están realizadas usando ``jdk-11.0.4`` y ``jdk-11.0.8`` ambos van bien. De modo que la variable de entorno ``JAVA_HOME`` debería guardar la ruta de acceso al jdk adecuado. P.e.
-`` $env:JAVA_HOME='C:\Program Files\Java\jdk-11.0.4' ``
+### 🔧 Additional Server Configurations in Development Mode
+👥 To be able to manage human tasks from BC, the configuration file adds `system.properties.org.jbpm.ht.admin.group=admin`
 
-Si se usan artefactos de work item handlers hay que tener precaución de que estén compilados con versión compatible del jdk
+📚 In this [GitHub repository](https://github.com/dmarrazzo/rh-bpm-notes/blob/master/human_tasks.md) you can find interesting information for human task management.
+
+🗄️ Server has also been configured so that the H2 console is available at `/h2-console`, to facilitate debugging.
+
+### ⚠️ Additional Considerations
+☕ Tests have been performed using `jdk-11.0.4` and `jdk-11.0.8`, both work well. So the environment variable `JAVA_HOME` should store the access path to the appropriate JDK. For example:
+```powershell
+$env:JAVA_HOME='C:\Program Files\Java\jdk-11.0.4'
+```
+
+🔧 If work item handler artifacts are used, care must be taken that they are compiled with a compatible JDK version.
