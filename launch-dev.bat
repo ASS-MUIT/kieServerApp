@@ -1,5 +1,6 @@
 @echo off
-
+set "JAVA_HOME=D:\Programas\Java\jdk-11.0.8"
+set "M2_HOME=D:\Programas\maven"
 set mavenInput="%*"
 
 if "%*" == "" (

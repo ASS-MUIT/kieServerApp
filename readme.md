@@ -15,23 +15,24 @@ In the product documentation [Red Hat Process Automation Manager](https://docs.r
 
 To start the application so that the server works in managed mode by the controller, you should execute:
 ```bash
-.\launch-dev.bat clean install
+.\launch-dev.bat clean install -s .\settings.xml
 ```
 
-### 🏢 Business Central Configuration
-📄 `standalone.xml` file: add the properties `org.kie.server.user` and `org.kie.server.pwd` with the data of a Kie server user that has the kie-server role, which grants credentials to access the server's REST API.
 
-🖥️ GUI: add a user that has the `rest-all` role, which grants credentials to access BC's API. This user must also be configured on the Kie server.
+### ⚙️ Kie Server Configuration for development mode
 
-### ⚙️ Kie Server Configuration
+This mode is intended to work in conjuntion with the docker containers available here https://github.com/ASS-MUIT/KIE-FHIR-DevelopmentEnvironment, the configuration of the server must be coherent with the configuration of the containers
+
 📄 `application-dev.properties` file: add the properties `org.kie.server.controller.pwd/user` with the BC user with `rest-all` credentials and `kieserver.controllers` with the BC REST API URL `http://localhost:8080/business-central/rest/controller`
 
 📄 `DefaultWebSecurityConfig` file: in development mode, when no identity provider is used, this is the file where server users are configured. Therefore, here it will be necessary to add a user that has the `kie-server` role, which will grant credentials to access the server API; this user must also be configured in BC.
 
-### ▶️ Execution
+📄 `Settings.xml` file: When using the development environment Maven is also configured to use a particular local folder for artifacts, this folder has to be the one mounted in the business central docker container as maven repository
+
+### ▶️ Execution in development mode
 1. 🚀 Start Business Central
 
-2. 🔧 When executing `.\launch-dev.bat clean install`, a Kie server connected to Business Central will start.
+2. 🔧 When executing `.\launch-dev.bat clean install -s .\settings.xml`, a Kie server connected to Business Central will start.
    You can see the server in the execution servers view with the name **kieserverapp-dev@localhost:8090**
 
 3. 📦 From that moment, containers defined in Business Central can be deployed on this server.
@@ -51,5 +52,13 @@ To start the application so that the server works in managed mode by the control
 ```powershell
 $env:JAVA_HOME='C:\Program Files\Java\jdk-11.0.4'
 ```
+The file `launch-dev.bat` is configured to set this variable environment
 
 🔧 If work item handler artifacts are used, care must be taken that they are compiled with a compatible JDK version.
+
+### 🏢 Business Central Configuration
+📄 `standalone.xml` file: must add the properties `org.kie.server.user` (e.g. kieserver) and `org.kie.server.pwd` (e.g. kieserver1!) with the data of a Kie server user that has the kie-server role, which grants credentials to access the server's REST API.
+
+🖥️ GUI: add a user that has the `rest-all` role, which grants credentials to access BC's API (e.g. controllerUser/controllerUser). This user must also be configured on the Kie server.
+
+When using https://github.com/ASS-MUIT/KIE-FHIR-DevelopmentEnvironment this configuration is ready
